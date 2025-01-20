@@ -1,0 +1,77 @@
+:host{
+    --bg-header : #eee;
+    --bg-button : #ddd;
+    --border-color : #8a2be2;
+    --bg-item : #ccc;
+}
+
+.header{
+    width: 100%;
+    min-height: 50px;
+    padding-block: 5px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-header);
+    transition: background-color 300ms ease-in-out;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.btnHead, .username{
+    padding: 5px 10px;
+    font-weight: 700;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    color: #009500;
+    background-color: var(--bg-button);
+    user-select: none;
+    transition: background-color 300ms ease-in-out;
+}
+
+.btnHead{
+    cursor: pointer;
+    display: flex;
+    column-gap: 30px;
+    position: relative;
+}
+
+.username{
+    font-size: 18px;
+}
+
+.langImg, .theme img{
+    width: 20px;
+}
+
+.header.darkHead{
+    --bg-header : #000;
+    --bg-button : #111;
+    --bg-item : #222;
+}
+
+.language .item{
+    padding-inline: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout{
+    width: max-content;
+    border-radius: 50%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logout img{
+    width: 28px;
+    cursor: pointer;
+}
+
+.openModal{
+    transform: scaleY(1);
+}

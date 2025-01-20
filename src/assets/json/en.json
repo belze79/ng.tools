@@ -1,0 +1,12 @@
+{
+    "theme" : {
+        "title" : "Theme",
+        "ligthTheme" : "Light Theme",
+        "darkTheme" : "Dark Theme"
+    },
+    "lang" : {
+        "title" : "Language",
+        "it" : "Italian",
+        "en" : "English"
+    }
+}

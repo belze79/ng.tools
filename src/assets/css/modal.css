@@ -1,0 +1,27 @@
+.modal{
+    width: 100%;
+    padding-block: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-button);
+    transform-origin: top;
+    transform: scaleY(0);
+    transition: transform 150ms ease-in-out, background-color 300ms ease-in-out;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    position: absolute;
+    top: 105%;
+    left: 0;
+    z-index: 100;
+}
+
+.item{
+    padding-block: 5px;
+    font-size: 14px;
+    text-align: center;
+    color: #009500;
+    background-color: var(--bg-item);
+    cursor: pointer;
+    transition: background-color 300ms ease-in-out;
+}

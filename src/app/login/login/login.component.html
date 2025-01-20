@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="bordup">
+        <img src="../../../assets/img/teutobelze.png">
+        <div class="titlehead">BELZE ToolsK</div>
+    </div>
+    <form [formGroup]="form" (submit)="submit()">
+        <div class="titleForm">LOGIN</div>
+        <div class="itemForm">
+            <div class="labelForm">Username</div>
+            <input type="text" formControlName="username">
+            <p class="errors" *ngIf="errorUsername">invalid username</p>
+        </div>
+        <div class="itemForm">
+            <div class="labelForm">Password</div>
+            <input type="password" formControlName="psw">
+            <p class="errors" *ngIf="errorPsw">invalid password</p>
+        </div>
+        <button [ngClass]="{'disabled' : !form.valid}" type="submit">Login</button>
+    </form>
+    <button class="goTo" routerLink="/register">Go to Register</button>
+    <div class="bordown"></div>
+</div>
+<div *ngIf="isSpinner" class="spinner">
+    <img src="../../../assets/img/spinner/loading.gif">
+</div>

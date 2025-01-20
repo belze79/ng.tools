@@ -1,0 +1,34 @@
+<div [ngClass]="{'header' : true, 'darkHead' : isDark}"  *ngIf="language['theme']">
+    <div class="username">{{username}}</div>
+    <div class="btnHead language" (click)="openModal('lang')">
+        {{language['lang']['title']}}
+        <img class="langImg" *ngIf="lang === 'it'" src="../../../assets/img/icon/it_flag.png">
+        <img class="langImg" *ngIf="lang === 'en'" src="../../../assets/img/icon/en_flag.png">
+        <div [ngClass]="{'modal' : true, 'openModal' : modals['lang']}" (click)="stopPropagation($event)">
+            <div class="item" (click)="setLang('it')">
+                {{language['lang']['it']}}
+                <img src="../../../assets/img/icon/it_flag.png">
+            </div>
+            <div class="item" (click)="setLang('en')">
+                {{language['lang']['en']}}
+                <img src="../../../assets/img/icon/en_flag.png">
+            </div>
+        </div>
+    </div>
+    <div class="btnHead theme" (click)="openModal('theme')">
+        {{language['theme']['title']}}
+        <img *ngIf="!isDark" src="../../../assets/img/icon/ligth.png" alt="chiaro">
+        <img *ngIf="isDark" src="../../../assets/img/icon/dark.png" alt="scuro">
+        <div [ngClass]="{'modal' : true, 'openModal' : modals['theme']}" (click)="stopPropagation($event)">
+            <div class="item" (click)="setTheme(false)">
+                {{language["theme"]["ligthTheme"]}}
+            </div>
+            <div class="item" (click)="setTheme(true)">
+                {{language["theme"]["darkTheme"]}}
+            </div>
+        </div>
+    </div>
+    <div class="logout" (click)="logout()">
+        <img src="../../../assets/img/icon/logout.png">
+    </div>
+</div>
