@@ -1,5 +1,5 @@
 export enum RequestUrl{
-    TEST_DB_URL = "http://localhost:8080",
+    TEST_DB_URL = "https://bktools.up.railway.app",
     DB_URL = "https://login-pr.up.railway.app",
 }
 
