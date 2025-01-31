@@ -44,6 +44,7 @@ export class RegisterComponent implements OnInit{
         next : resp => {
           console.log('risposta register ok', resp)
           this.authService.spinner = false
+          this.router.navigate(['/login'])
         },
         error : err => {
           const message = err.error.response

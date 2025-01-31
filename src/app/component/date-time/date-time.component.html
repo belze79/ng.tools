@@ -107,7 +107,7 @@
                     <div [ngClass]="{'modal':true, 'openModal':isOpenModal('second')}"
                     (click)="stopPropagation($event)">
                         <div class="itemModal" *ngFor="let nrSecond of minutes"
-                        (click)="setMinute(nrSecond)">
+                        (click)="setSecond(nrSecond)">
                             {{nrSecond | padstart2}}
                         </div>
                     </div>

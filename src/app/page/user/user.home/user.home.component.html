@@ -1,15 +1,18 @@
-<div *ngIf="isSpinner" class="spinner">
+<div class="spinnerHome" 
+[ngStyle]="{top : top + 'px'}" *ngIf="isSpinner">
     <img src="../../../assets/img/spinner/loading.gif">
 </div>
-<div #errorDiv [ngStyle]="setErrorDiv()">ERRORE POI VEDIAMO QUALE</div>
+<div class="errorHome" [ngStyle]="{top : top + 'px'}" *ngIf="isError">
+    {{errorMessage | uppercase}}
+</div>
 <app-header></app-header>
 <div *ngIf="isHome" class="homeContainer">
     <div class="pageTitle">home page</div>
     <div class="serverContainer">
         <div class="serverPerType" *ngFor="let arr of gameWorlds">
-            <div [ngClass]="{'server':true, 'error' : gw.status === false, 'selected' : gw.status === true}" 
+            <div [ngClass]="{'server':true, 'error' : isInactiveWorld(gw.name), 'selected' : gw.status === true}" 
                 *ngFor="let gw of arr" 
-                (click)="getData(gw.name)">
+                (click)="getData(gw.name, $event)">
                 {{gw.name | uppercase}}
             </div>
         </div>

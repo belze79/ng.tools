@@ -22,16 +22,14 @@ export class UserHomeComponent implements OnInit, OnDestroy{
 
   isHome! : boolean
   isSpinner! : boolean
+  isError! : boolean
   isGameworld : boolean = false
   gameWorlds : WorldName[][] = []
   subscriptions : Subscription = new Subscription()
-
-  isError : boolean = false
-  top : number = -30
-  left : number = -300
-  mouseX : number = 0
-  mouseY : number = 0
-  @ViewChild('errorDiv') errorDiv! : ElementRef<HTMLElement>
+  top : number = 0
+  left : number = 0
+  errorMessage! : string
+  inactiveWorlds! : string[]
 
 
   constructor(private authService : AuthService, 
@@ -40,44 +38,6 @@ export class UserHomeComponent implements OnInit, OnDestroy{
     private idb : IndexedDbService,
     private router : Router){}
 
-  resetDB() : void{
-    this.idb.resetDatabase()
-  }
-
-  setErrorDiv() {
-    return {
-      width : 'max-content',
-      backgroundColor : 'blue',
-      color : 'red',
-      position : 'absolute',
-      top : `${this.top}px`,
-      left : `${this.left}px`,
-      transform : `translate(${this.mouseX}px, ${this.mouseY}px)`,
-      transition : 'transform 500ms ease-in-out',
-      display : this.isError ? 'block' : 'none'
-    }
-  }
-
-  showError(e : MouseEvent){
-    const target = e.target as HTMLElement
-    this.isError = true
-    setTimeout(() => {
-      
-      this.mouseX = this.left > 0 ? -window.innerWidth + e.clientX  : e.clientX + 300
-      this.mouseY = this.top > 0 ? -window.innerHeight + e.clientY : e.clientY + 30
-      console.log(this.errorDiv.nativeElement.offsetWidth)
-    }, 0);
-    // this.mouseX = e.clientX
-    // this.mouseY = e.clientY
-    // console.log(this.mouseX, this.mouseY)
-    setTimeout(() => {
-      this.isError = false
-      this.top = window.innerHeight
-      this.left = window.innerWidth
-      this.mouseX = 0
-      this.mouseY = 0
-    }, 2000);
-  }
 
   ngOnInit(): void {
     this.isHome = this.router.url === '/'
@@ -91,27 +51,49 @@ export class UserHomeComponent implements OnInit, OnDestroy{
         }
       })
     )
-  this.tkService.getWorlds().subscribe({
-    next : resp => {
-        this.gameWorlds = resp
-        console.log('gameworlds', this.gameWorlds)
-        const gameworld = this.storageService.gameworld
-        if(gameworld){
-          this.getData(gameworld)
-        }
-    },
-    error : err => {
-      console.error('errore richiesta nomi mondi', err)
-    }
-  })
-}
+    this.tkService.getWorlds().subscribe({
+      next : resp => {
+          this.gameWorlds = resp
+          console.log('gameworlds', this.gameWorlds)
+          const gameworld = this.storageService.gameworld
+          if(gameworld){
+            this.getData(gameworld)
+          }
+      },
+      error : err => {
+        console.error('errore richiesta nomi mondi', err)
+      }
+    })
+    this.inactiveWorlds = this.storageService.inactiveWorlds
+  }
 
-ngOnDestroy(): void {
-  this.subscriptions.unsubscribe()
-}
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe()
+  }
 
-  getData(gameWorld : string){
-    if(gameWorld && gameWorld){
+  isInactiveWorld(gameworld : string) : boolean{
+    return this.inactiveWorlds.includes(gameworld)
+  }
+
+  setErrorMessage(gameworld : string){
+    this.errorMessage = `mondo di gioco ${gameworld} non attivo`
+    this.isError = true
+    setTimeout(() => {
+      this.isError = false
+    }, 3000);
+  }
+
+  getData(gameWorld : string, e : MouseEvent | null = null){
+    if(gameWorld){
+      if(e){
+        this.top = e.pageY
+        this.left = e.pageX
+      }
+      if(this.isInactiveWorld(gameWorld)){
+        this.setErrorMessage(gameWorld)
+        return
+      }
+      this.isSpinner = true
       const world = this.gameWorlds.flat().find(obj => obj.name === gameWorld) as WorldName
       this.tkService.getDataFromStore(IndexedDbKey.GAME_WORLD_DATA, gameWorld).subscribe({
         next : () => {
@@ -119,8 +101,16 @@ ngOnDestroy(): void {
           world.status = true
           this.storageService.gameworld = gameWorld
           this.isGameworld = true
+          this.isSpinner = false
         },
-        error : () => world.status = false
+        error : () => {
+          world.status = false
+          this.isSpinner = false
+          this.inactiveWorlds.push(gameWorld)
+          this.storageService.inactiveWorlds = this.inactiveWorlds
+          this.setErrorMessage(gameWorld)
+        },
+        complete : () => this.isSpinner = false
       })
     }
   }

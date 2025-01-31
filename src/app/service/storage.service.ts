@@ -95,4 +95,13 @@ export class StorageService {
     const logged : Logged = {logged : isLogged}
     this.setLocal(StorageKey.LOGIN, JSON.stringify(logged))
   }
+
+  get inactiveWorlds() : string[]{
+    const inactives = this.getLocal(StorageKey.INACTIVE_GAMEWORLDS)
+    return inactives ? JSON.parse(inactives) : []
+  }
+
+  set inactiveWorlds(inactives : string[]){
+    this.setLocal(StorageKey.INACTIVE_GAMEWORLDS, JSON.stringify(inactives))
+  }
 }

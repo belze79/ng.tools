@@ -1,5 +1,5 @@
 <div [ngClass]="{'header' : true}"  *ngIf="language['theme']">
-    <div class="username">{{username}}</div>
+   
     <div class="btnHead language btnModal" (click)="toggleModal('lang')">
         {{language['lang']['title']}}
         <img class="langImg" *ngIf="lang === 'it'" src="../../../assets/img/icon/it_flag.png">
@@ -28,7 +28,13 @@
             </div>
         </div>
     </div>
-    <div class="logout" (click)="logout()">
-        <img src="../../../assets/img/icon/logout.png">
+    <div class="username">
+        {{username}}
+        <div class="logout" (click)="logout()">
+            <img src="../../../assets/img/icon/logout.png">
+        </div>
     </div>
+    <!-- <div class="logout" (click)="logout()">
+        <img src="../../../assets/img/icon/logout.png">
+    </div> -->
 </div>

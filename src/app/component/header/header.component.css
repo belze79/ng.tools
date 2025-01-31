@@ -23,6 +23,12 @@
     transition: background-color 300ms ease-in-out;
 }
 
+.username{
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+}
+
 .btnHead{
     cursor: pointer;
     display: flex;
@@ -46,16 +52,15 @@
 }
 
 .logout{
-    width: max-content;
+    /* width: max-content; */
     border-radius: 50%;
-    background-color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .logout img{
-    width: 28px;
+    width: 22px;
     cursor: pointer;
 }
 

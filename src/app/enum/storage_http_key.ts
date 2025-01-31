@@ -11,7 +11,8 @@ export enum StorageKey{
     THEME = 'theme',
     LANG = "language",
     LOGIN = "isLogged",
-    GAMEWORLD = 'gameworld'
+    GAMEWORLD = 'gameworld',
+    INACTIVE_GAMEWORLDS = 'inactiveGameworlds'
 }
 
 export enum RequestParam{
