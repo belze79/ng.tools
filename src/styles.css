@@ -1,10 +1,16 @@
 :root{
+    --primary : #00ADA3;
+    --secondary : #3D8100;
+    --ternary : #381385;
     --color-body : #000;
-    --bg-body : #fff;
+    --bg-body : #eee;
+    --bg-header : #ddd;
     --color-button : #009500;
     --bg-button : #ddd;
     --border-color : #8a2be2;
-    --bg-item : #ccc;
+    --bg-item-modal : #ccc;
+    --color-item-modal : #009500;
+    --bg-server : #ddd;
 }
 
 *{
@@ -25,10 +31,27 @@ body{
 }
 
 body.dark, .serverContainer.dark{
+    --primary : #00FFF0;
+    --secondary : #79FF00;
+    --ternary : #6C24FF;
     --color-body : #aaa;
     --bg-body : #111;
+    --bg-header : #000;
     --bg-button : #222;
-    --bg-item : #333;
+    --bg-item-modal : #333;
+    --bg-server : #353535;
+}
+
+.primary{
+    color: var(--primary);
+}
+
+.secondary{
+    color: var(--secondary);
+}
+
+.ternary{
+    color: var(--ternary);
 }
 
 .spinner{
@@ -37,3 +60,26 @@ body.dark, .serverContainer.dark{
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.pageTitle{
+    width: 100%;
+    padding-block: 30px;
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.selectionTitle{
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.playerTitle{
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+

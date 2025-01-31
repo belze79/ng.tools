@@ -10,7 +10,8 @@ export enum StorageKey{
     ROLE = "role",
     THEME = 'theme',
     LANG = "language",
-    LOGIN = "isLogged"
+    LOGIN = "isLogged",
+    GAMEWORLD = 'gameworld'
 }
 
 export enum RequestParam{
@@ -33,4 +34,12 @@ export enum ErrorResponse{
     NO_MATCH = 'NO_MATCH',
     NO_AUTHORIZATION = 'NO_AUTHORIZATION',
     SERVER_ERROR = 'SERVER_ERROR',
+}
+
+export enum IndexedDbKey{
+    DB_NAME = 'TravianData',
+    VERSION = 1,
+    GAME_WORLD_DATA = 'GameWorldData',
+    PLAN_DATA = 'PlanData',
+    SPY_DATA = 'SpyData'
 }

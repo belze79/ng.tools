@@ -1,3 +1,10 @@
+.homeContainer{
+    padding-block: 30px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 50px;
+}
+
 .gopage{
     width: 250px;
     height: 100px;
@@ -12,11 +19,11 @@
 }
 
 .serverContainer{
-    width: 350px;
-    margin-inline: auto;
+    width: 100%;
+    padding-inline: 30px;
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
+    row-gap: 30px;
 }
 
 .serverPerType{
@@ -28,22 +35,21 @@
 
 .server{
     padding: 5px 15px;
-    background-color: #333;
+    border-radius: 4px;
+    /* color: orange; */
+    background-color: var(--bg-server);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 300ms ease-in-out;
 }
 
-.contProva{
-    width: 100%;
-    padding-top: 50px;
-    display: flex;
-    justify-content: space-evenly;
-
+.error{
+    color: rgb(255, 60, 60);
 }
 
-.prova{
-    width: 200px;
-    max-height: 150px;
-    padding: 10px;
-    border: 2px solid green;
-    overflow: scroll;
-    scrollbar-width: none;
+.selected{
+    font-weight: 900;
+    border: 2px solid;
+    color: green;
 }
+

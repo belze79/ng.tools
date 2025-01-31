@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RequestUrl, StorageKey } from '../enum/storage_http_key';
+import { RequestUrl} from '../enum/storage_http_key';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { StorageService } from './storage.service';
@@ -22,7 +22,6 @@ interface LanguageRequest{
 export class LanguageService {
 
   private readonly dbUrl : string = RequestUrl.TEST_DB_URL + '/api/set'
-  private _online! : boolean
   private _lang : BehaviorSubject<string> = new BehaviorSubject<string>('it')
   private languageSubject : BehaviorSubject<Language> = new BehaviorSubject<Language>({})
   lang$ : Observable<string> = this._lang.asObservable()
@@ -38,17 +37,11 @@ export class LanguageService {
   }
 
   get online() : boolean{
-    const jsonString = this.storageService.getLocal(StorageKey.LOGIN)
-    if(jsonString){
-      const json = JSON.parse(jsonString)
-      return json.isLogged
-    }
-    return false
+    return this.storageService.online
   }
 
   set online(isLogged : boolean){
-    this._online = isLogged
-    this.storageService.setLocal(StorageKey.LOGIN, JSON.stringify({isLogged : isLogged}))
+    this.storageService.online = isLogged
   }
 
   set language(lang : string){
@@ -62,23 +55,29 @@ export class LanguageService {
   }
 
   get lang() : string{
-    return this.storageService.getLocal(StorageKey.LANG) || 'it'
+    return this.storageService.lang || 'it'
   }
 
   set lang(lang : string){
     if(lang){
       this._lang.next(lang)
-      this.storageService.setLocal(StorageKey.LANG, lang)
+      this.storageService.lang = lang
       this.language = lang
     }
   }
 
-  setLang(body : LanguageRequest, lang : string){
+  setLang(lang : string){
+    const token = this.storageService.accessToken
+    if(!token || !lang){
+      console.log('nessun token da inviare o nessuna lingua inserita')
+      return
+    }
+    const body : LanguageRequest = {lang : lang, token : token}
     this.authService.spinner = true
     this.http.post(`${this.dbUrl}/lang`, body).subscribe({
       next : resp => {
         console.log('change lang ok', resp),
-        // this.lang = lang
+        this.lang = lang
         this.authService.spinner = false
       },
       error : err => {

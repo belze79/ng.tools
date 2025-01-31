@@ -1,0 +1,20 @@
+.playerContainer{
+    width: 100%;
+    padding-block: 50px;
+    display: flex;
+    justify-content: space-around;
+    /* align-items: center; */
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.player{
+    padding-block: 30px;
+    border: 2px solid;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    row-gap: 30px;
+}

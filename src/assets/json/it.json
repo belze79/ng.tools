@@ -8,5 +8,51 @@
         "title" : "Lingua",
         "it" : "Italiano",
         "en" : "Inglese"
+    },
+    "troop" : {
+        "legionario" : "Legionario",
+        "pretoriano" : "Pretoriano",
+        "imperiano" : "Imperiano",
+        "emissario_a_cavallo" : "Emissario a Cavallo",
+        "cavaliere_del_generale" : "Cavaliere del Generale",
+        "cavaliere_di_cesare" : "Cavaliere di Cesare",
+        "ariete" : "Ariete",
+        "onagro" : "Onagro",
+        "senatore" : "Senatore",
+        "combattente" : "Combattente",
+        "alabardiere" : "Alabardiere",
+        "combattente_con_ascia" : "Combattente con Ascia",
+        "esploratore" : "Esploratore",
+        "paladino" : "Paladino",
+        "cavaliere_teutonico" : "Cavaliere Teutonico",
+        "catapulta" : "Catapulta",
+        "comandante" : "Comandante",
+        "falange" : "Falange",
+        "combattente_con_spada" : "Combattente con Spada",
+        "ricognitore" : "Ricognitore",
+        "fulmine_di_teutates" : "Fulmine di Teutates",
+        "cavaliere_druido" : "Cavaliere Druido",
+        "cavaliere_di_haeduan" : "Cavaliere di Haeduan",
+        "trabucco" : "Trabucco",
+        "capo_tribu" : "Capo Tribù"
+    },
+    "time" : {
+        "arrival" : "orario arrivo",
+        "year" : "anno",
+        "month" : "mese",
+        "day" : "giorno",
+        "hours" : "ore",
+        "minutes" : "minuti",
+        "seconds" : "secondi"
+    },
+    "player" : {
+        "attacker" : "attaccante",
+        "defender" : "difensore",
+        "phalanger" : "falangiatore",
+        "scout" : "spia",
+        "kingdom" : "regno",
+        "player" : "giocatore",
+        "village" : "villaggio",
+        "siege" : "assedio"
     }
 }

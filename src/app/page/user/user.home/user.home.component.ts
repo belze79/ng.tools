@@ -1,28 +1,16 @@
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { catchError, map, Subscription, throwError } from 'rxjs';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../../service/auth.service';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet, RouterModule } from '@angular/router';
 import { HeaderComponent } from "../../../component/header/header.component";
-import { TravianService } from '../../../service/travian.service';
-import { Kingdom, Player, Village } from '../../../interface/gameworld_interface';
+import { TravianService, WorldName } from '../../../service/travian.service';
+import { PlayerOut } from '../../../interface/player_interface';
+import { StorageService } from '../../../service/storage.service';
+import { IndexedDbService } from '../../../service/indexed-db.service';
+import { IndexedDbKey } from '../../../enum/storage_http_key';
+import { PlayeroutComponent } from "../../../component/playerout/playerout.component";
 
-interface WorldNameResponse{
-  gameworldName : string,
-  online : boolean
-}
-
-interface ApiWorldResponse{
-  response : WorldNameResponse[]
-  success : boolean
-}
-
-interface PlayerOut{
-  name : string,
-  villa : string,
-  x : number,
-  y : number
-}
 
 @Component({
   selector: 'app-user.home',
@@ -34,61 +22,65 @@ export class UserHomeComponent implements OnInit, OnDestroy{
 
   isHome! : boolean
   isSpinner! : boolean
-  gameWorlds : WorldNameResponse[][] = []
+  isGameworld : boolean = false
+  gameWorlds : WorldName[][] = []
   subscriptions : Subscription = new Subscription()
-  kingdoms : Kingdom[] = []
-  players : Player[] = []
-  playersSelection : Player[] = []
-  villageSelection : Village[] = []
-  playerOut : PlayerOut | null = null
-  kingdomId : string = ''
-  kingdomName : string = ''
 
-  @ViewChild('set') set! : ElementRef<HTMLInputElement>
+  isError : boolean = false
+  top : number = -30
+  left : number = -300
+  mouseX : number = 0
+  mouseY : number = 0
+  @ViewChild('errorDiv') errorDiv! : ElementRef<HTMLElement>
 
-  constructor(private authService : AuthService, private tkService : TravianService, private router : Router){}
 
-  setGameWorld(){
-    const value : string = this.set.nativeElement.value
-    if(value){
-      this.tkService.setGameworld(value)
+  constructor(private authService : AuthService, 
+    private tkService : TravianService, 
+    private storageService : StorageService, 
+    private idb : IndexedDbService,
+    private router : Router){}
+
+  resetDB() : void{
+    this.idb.resetDatabase()
+  }
+
+  setErrorDiv() {
+    return {
+      width : 'max-content',
+      backgroundColor : 'blue',
+      color : 'red',
+      position : 'absolute',
+      top : `${this.top}px`,
+      left : `${this.left}px`,
+      transform : `translate(${this.mouseX}px, ${this.mouseY}px)`,
+      transition : 'transform 500ms ease-in-out',
+      display : this.isError ? 'block' : 'none'
     }
   }
 
-  getData(name : string){
-    if(name){
-      this.playersSelection = []
-      this.villageSelection = []
-      this.tkService.getData(name)
-    }
-  }
-
-  setPlayersKingdom(kingdomId : string){
-    if(kingdomId === 'void'){
-      this.playersSelection = this.players
-    }
-    else this.playersSelection = this.players.filter(player => player.kingdomId === kingdomId)
-    this.playersSelection.sort((a, b) => a.name.localeCompare(b.name))
-    console.log(this.playersSelection)
-  }
-
-  getPlayer(playerID : string){
-    const player : Player = this.players.find(pl => pl.playerId === playerID) as Player
-    this.villageSelection = player.villages
-    this.playerOut = {name : player.name, villa : '', x : 0, y : 0}
-    console.log('villages', this.villageSelection)
-  }
-
-  getVilla(villa : Village){
-    const {name, x, y} : Village = villa 
-    this.playerOut = {name : this.playerOut!.name, villa : name, x, y}
-    console.log(this.playerOut)
-    console.log(villa)
+  showError(e : MouseEvent){
+    const target = e.target as HTMLElement
+    this.isError = true
+    setTimeout(() => {
+      
+      this.mouseX = this.left > 0 ? -window.innerWidth + e.clientX  : e.clientX + 300
+      this.mouseY = this.top > 0 ? -window.innerHeight + e.clientY : e.clientY + 30
+      console.log(this.errorDiv.nativeElement.offsetWidth)
+    }, 0);
+    // this.mouseX = e.clientX
+    // this.mouseY = e.clientY
+    // console.log(this.mouseX, this.mouseY)
+    setTimeout(() => {
+      this.isError = false
+      this.top = window.innerHeight
+      this.left = window.innerWidth
+      this.mouseX = 0
+      this.mouseY = 0
+    }, 2000);
   }
 
   ngOnInit(): void {
     this.isHome = this.router.url === '/'
-    console.log('ishome', this.router.url)
     this.subscriptions.add(
       this.authService.spinner$.subscribe(spinner => this.isSpinner = spinner)
     )
@@ -99,45 +91,38 @@ export class UserHomeComponent implements OnInit, OnDestroy{
         }
       })
     )
-    this.subscriptions.add(
-      this.tkService.kingdoms$.subscribe(kingdoms => {
-        const voidKimgdom : Kingdom = {kingdomId : 'void', kingdomTag : 'Nessun Regno', victoryPoints : ''}
-        this.kingdomId = voidKimgdom.kingdomId
-        this.kingdomName = voidKimgdom.kingdomTag
-        this.kingdoms = [voidKimgdom, ...kingdoms]
-      }
-    )
-    )
-    this.subscriptions.add(
-      this.tkService.players$.subscribe(players => {
-        this.players = players
-        this.playersSelection = players
-      }
-    )
-    )
-    this.tkService.getWorlds().pipe(
-      map((resp : ApiWorldResponse) => {
-        const all = resp.response.sort((a, b) => a.gameworldName.localeCompare(b.gameworldName))
-        const ini = Array.from(new Set(all.map(gw => gw.gameworldName[0]))).sort()
-        ini.forEach(initial => {
-          const arr : WorldNameResponse[] = []
-          all.forEach(gw => {
-            if(initial === gw.gameworldName[0]){
-              arr.push(gw)
-            }
-          })
-          arr.sort((a, b) => a.gameworldName.localeCompare(b.gameworldName))
-          this.gameWorlds.push(arr)
-        })
+  this.tkService.getWorlds().subscribe({
+    next : resp => {
+        this.gameWorlds = resp
         console.log('gameworlds', this.gameWorlds)
-      }
-    ),
-      catchError(err => throwError(() => new Error('errore reperimento worlds')))
-    ).subscribe()
-  }
+        const gameworld = this.storageService.gameworld
+        if(gameworld){
+          this.getData(gameworld)
+        }
+    },
+    error : err => {
+      console.error('errore richiesta nomi mondi', err)
+    }
+  })
+}
 
-  ngOnDestroy(): void {
-      this.subscriptions.unsubscribe()
+ngOnDestroy(): void {
+  this.subscriptions.unsubscribe()
+}
+
+  getData(gameWorld : string){
+    if(gameWorld && gameWorld){
+      const world = this.gameWorlds.flat().find(obj => obj.name === gameWorld) as WorldName
+      this.tkService.getDataFromStore(IndexedDbKey.GAME_WORLD_DATA, gameWorld).subscribe({
+        next : () => {
+          this.gameWorlds.flat().forEach(obj => obj.status === true ? obj.status = null : obj.status = obj.status)
+          world.status = true
+          this.storageService.gameworld = gameWorld
+          this.isGameworld = true
+        },
+        error : () => world.status = false
+      })
+    }
   }
 
   goPhal(){

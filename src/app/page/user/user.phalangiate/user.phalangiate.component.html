@@ -1,2 +1,35 @@
-<h1>PHALANGIATE</h1>
+<div class="pageTitle">phalangiate</div>
 <button routerLink="">Go To Home</button>
+<div class="playerContainer">
+    <div class="player primary">
+        <div class="playerTitle">
+            <ng-container *ngIf="language['player']">
+                {{language['player']['attacker']}}
+            </ng-container>
+        </div>
+        <app-playerout [playerOut]="attacker"></app-playerout>
+        <app-troops [playerOut]="attacker"></app-troops>
+        <app-ts-siege [playerOut]="attacker"></app-ts-siege>
+    </div>
+    <div class="player secondary">
+        <div class="playerTitle">
+            <ng-container *ngIf="language['player']">
+                {{language['player']['defender']}}
+            </ng-container>
+        </div>
+        <app-date-time (arrival)="arrival = $event"></app-date-time>
+        <app-playerout [playerOut]="defender"></app-playerout>
+    </div>
+    <div class="player ternary">
+        <div class="playerTitle">
+            <ng-container *ngIf="language['player']">
+                {{language['player']['phalanger']}}
+            </ng-container>
+        </div>
+        <app-playerout [playerOut]="phalanger"></app-playerout>
+        <app-troops [playerOut]="phalanger"></app-troops>
+        <app-ts-siege [playerOut]="phalanger"></app-ts-siege>
+    </div>
+</div>
+<button (click)="logPlayer()">Stampa attacker</button>
+<button (click)="calcola()" [disabled]="!control()">Bottone Calcolo</button>

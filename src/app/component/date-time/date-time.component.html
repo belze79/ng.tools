@@ -1,0 +1,118 @@
+<div class="containerDatetime">
+    <div class="showDate">
+        <div class="selectionTitle">
+            <ng-container *ngIf="language['player']">
+                {{language['time']['arrival']}}
+            </ng-container>
+        </div>
+        <div class="dateString">{{formatDate()}}</div>
+    </div>
+    <div class="datetime">
+        <div class="dateContainer">
+            <div class="itemDT">
+                <span class="titleItemDT">
+                    <ng-container *ngIf="language['player']">
+                        {{language['time']['year']}}
+                    </ng-container>
+                </span>
+                <div class="year btnDT btnModal" (click)="toggleModal('year')">
+                    {{year}}
+                    <div [ngClass]="{'modal':true, 'openModal':isOpenModal('year')}"
+                    (click)="stopPropagation($event)">
+                        <div class="itemModal" *ngFor="let nrYear of years"
+                        (click)="setYear(nrYear)">
+                            {{nrYear}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="itemDT">
+                <span class="titleItemDT">
+                    <ng-container *ngIf="language['player']">
+                        {{language['time']['month']}}
+                    </ng-container>
+                </span>
+                <div class="mounth btnDT btnModal" (click)="toggleModal('month')">
+                    {{monthName | capitalize}}
+                    <div [ngClass]="{'modal':true, 'openModal':isOpenModal('month')}"
+                    (click)="stopPropagation($event)">
+                        <div class="itemModal" *ngFor="let name of mounthNames index as i"
+                        (click)="setMonth(i)">
+                            {{name | capitalize}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="itemDT">
+                <span class="titleItemDT">
+                    <ng-container *ngIf="language['player']">
+                        {{language['time']['day']}}
+                    </ng-container>
+                </span>
+                <div class="date btnDT btnModal" (click)="toggleModal('day')">
+                    {{day | padstart2}}
+                    <div [ngClass]="{'modal':true, 'openModal':isOpenModal('day')}"
+                    (click)="stopPropagation($event)">
+                        <div class="itemModal" *ngFor="let nrDay of daysOfMonth"
+                        (click)="setDay(nrDay)">
+                            {{nrDay | padstart2}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="timeContainer">
+            <div class="itemDT">
+                <span class="titleItemDT">
+                    <ng-container *ngIf="language['player']">
+                        {{language['time']['hours']}}
+                    </ng-container>
+                </span>
+                <div class="hours btnDT btnModal" (click)="toggleModal('hour')">
+                    {{hour | padstart2}}
+                    <div [ngClass]="{'modal':true, 'openModal':isOpenModal('hour')}"
+                    (click)="stopPropagation($event)">
+                        <div class="itemModal" *ngFor="let nrHour of hours"
+                        (click)="setHour(nrHour)">
+                            {{nrHour | padstart2}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="itemDT">
+                <span class="titleItemDT">
+                    <ng-container *ngIf="language['player']">
+                        {{language['time']['minutes']}}
+                    </ng-container>
+                </span>
+                <div class="minutes btnDT btnModal" (click)="toggleModal('minute')">
+                    {{minute | padstart2}}
+                    <div [ngClass]="{'modal':true, 'openModal':isOpenModal('minute')}"
+                    (click)="stopPropagation($event)">
+                        <div class="itemModal" *ngFor="let nrMinute of minutes"
+                        (click)="setMinute(nrMinute)">
+                            {{nrMinute | padstart2}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="itemDT">
+                <span class="titleItemDT">
+                    <ng-container *ngIf="language['player']">
+                        {{language['time']['seconds']}}
+                    </ng-container>
+                </span>
+                <div class="seconds btnDT btnModal" (click)="toggleModal('second')">
+                    {{second | padstart2}}
+                    <div [ngClass]="{'modal':true, 'openModal':isOpenModal('second')}"
+                    (click)="stopPropagation($event)">
+                        <div class="itemModal" *ngFor="let nrSecond of minutes"
+                        (click)="setMinute(nrSecond)">
+                            {{nrSecond | padstart2}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

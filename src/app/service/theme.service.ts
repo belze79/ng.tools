@@ -31,28 +31,29 @@ export class ThemeService {
   }
 
   get theme() : boolean{
-    const stringJson = this.storageService.getLocal(StorageKey.THEME)
-    if(stringJson){
-      const jsonTheme = JSON.parse(stringJson)
-      return jsonTheme.theme
-    }
-    return false
+    return this.storageService.theme
   }
 
   set theme(isDark : boolean){
     if(isDark !== null){
       this.isDark.next(isDark)
-      this.storageService.setLocal(StorageKey.THEME, JSON.stringify({theme : isDark}))
+      this.storageService.theme = isDark
       this.toggleTheme(isDark)
     }
   }
 
-  setTheme(body  :ThemeRequest, isDark : boolean){
+  setTheme(isDark : boolean){
+    const token = this.storageService.accessToken
+    if(!token){
+      console.log('nessun token da inviare')
+      return
+    }
+    const body : ThemeRequest = {dark : isDark, token : token}
     this.authService.spinner = true
     this.http.post(`${this.dbUrl}/theme`, body).subscribe({
       next : resp => {
         console.log('change theme ok', resp),
-        // this.theme = isDark
+        this.theme = isDark
         this.authService.spinner = false
       },
       error : err => {

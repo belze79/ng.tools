@@ -6,8 +6,10 @@ import { adminGuard } from './service/admin.guard';
 import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
 import { UserPhalangiateComponent } from './page/user/user.phalangiate/user.phalangiate.component';
+import { DateTimeComponent } from './component/date-time/date-time.component';
 
 export const routes: Routes = [
+    {path : 'prova', component : DateTimeComponent},
     {path : '', component : UserHomeComponent, canActivate : [userGuard], children : [
         {path : 'phalangiate', component : UserPhalangiateComponent}
     ]},

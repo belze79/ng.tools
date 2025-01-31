@@ -1,0 +1,23 @@
+<div class="containerTroops">
+    <div class="selectionTitle">select troop</div>
+    <div [ngClass]="{'selected':true, 'btnModal':true, 'disableClick':!playerOut.tribe}" 
+    (click)="toggleModal('troop')">
+        <ng-template *ngIf="playerOut.setted then ok else no"></ng-template>
+        <ng-template #ok>
+            <img [src]="troopSelected.src" [title]="language[troopSelected.type][troopSelected.trad]" [alt]="language[troopSelected.type][troopSelected.trad]">
+            {{language[troopSelected.type][troopSelected.trad]}}
+        </ng-template>
+        <ng-template #no>
+            {{'----------'}}
+        </ng-template>
+        <div [ngClass]="{'modal' : true, 'openModal':isOpenModal('troop')}" 
+        (click)="stopPropagation($event)">
+            <ng-container *ngFor="let troop of troopsImage">
+                <div class="troop" *ngIf="troop.tribe === playerOut.tribe" (click)="setSpeed(troop)">
+                    <img [src]="troop.src" [title]="language[troop.type][troop.trad]"
+                    [alt]="language[troop.type][troop.trad]">
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

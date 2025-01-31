@@ -1,0 +1,24 @@
+<div class="tsSiegeContainer">
+    <div class="siege">
+        <div class="selectionTitle">
+            <ng-container *ngIf="language['player']">
+                {{language['player']['siege']}}
+            </ng-container>
+        </div>
+        <div class="switchSiege" (click)="toggleSiege()">
+            <div [ngClass]="{'cursor' : true, 'isSiege' : isSiege}"></div>
+        </div>
+    </div>
+    <div class="ts">
+        <div class="selectionTitle">TS</div>
+        <div class="tsSelected btnModal" (click)="toggleModal('ts')">
+            {{ts}}
+            <div [ngClass]="{'modal':true, 'openModal':isOpenModal('ts')}"
+            (click)="stopPropagation($event)">
+                <div class="itemModal" *ngFor="let tsLvl of tsLvls" (click)="tsSelected(tsLvl)">
+                    {{tsLvl}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

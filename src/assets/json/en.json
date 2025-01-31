@@ -8,5 +8,51 @@
         "title" : "Language",
         "it" : "Italian",
         "en" : "English"
+    },
+    "troop" : {
+        "legionario" : "Legionnaire",
+        "pretoriano" : "Pretorian",
+        "imperiano" : "Imperian",
+        "emissario_a_cavallo" : "Equites Legatis",
+        "cavaliere_del_generale" : "Equites Imperatoris",
+        "cavaliere_di_cesare" : "Equites Caesaris",
+        "ariete" : "Ram",
+        "onagro" : "Fire Catapult",
+        "senatore" : "Senator",
+        "combattente" : "Maceman",
+        "alabardiere" : "Spearman",
+        "combattente_con_ascia" : "Axeman",
+        "esploratore" : "Scout",
+        "paladino" : "Paladin",
+        "cavaliere_teutonico" : "Teutonic Knight",
+        "catapulta" : "Catapult",
+        "comandante" : "Chief",
+        "falange" : "Phalanx",
+        "combattente_con_spada" : "Swordsman",
+        "ricognitore" : "Pathfinder",
+        "fulmine_di_teutates" : "Theutates Thunder",
+        "cavaliere_druido" : "Druidider",
+        "cavaliere_di_haeduan" : "Haeduan",
+        "trabucco" : "Trebuchet",
+        "capo_tribu" : "Chieftain"
+    },
+    "time" : {
+        "arrival" : "arrival time",
+        "year" : "year",
+        "month" : "month",
+        "day" : "day",
+        "hours" : "hours",
+        "minutes" : "minutes",
+        "seconds" : "seconds"
+    },
+    "player" : {
+        "attacker" : "attacker",
+        "defender" : "defender",
+        "phalanger" : "phalangher",
+        "scout" : "scout",
+        "kingdom" : "kingdom",
+        "player" : "player",
+        "village" : "village",
+        "siege" : "siege"
     }
 }

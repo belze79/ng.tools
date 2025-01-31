@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ModalService } from './service/modal.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,13 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'tools';
+  
+  constructor(private modalService : ModalService){}
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(e : MouseEvent){
+    const target = e.target as HTMLElement
+    if(target.closest('.btnModal')) return
+    this.modalService.closeAllModals()
+  }
 }

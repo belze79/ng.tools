@@ -1,0 +1,68 @@
+.containerDatetime{
+    width: 350px;
+    padding-inline: 30px;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 25px;
+}
+
+.showDate{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+}
+
+.dateString{
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.datetime{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+.dateContainer, .timeContainer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.itemDT{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+}
+
+.titleItemDT{
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.btnDT{
+    width: 80px;
+    height: 30px;
+    border: 1px solid;
+    border-radius: 4px;
+    background-color: var(--bg-button);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.modal{
+    max-height: 150px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}

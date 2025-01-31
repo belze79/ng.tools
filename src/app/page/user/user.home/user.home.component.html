@@ -1,29 +1,25 @@
 <div *ngIf="isSpinner" class="spinner">
     <img src="../../../assets/img/spinner/loading.gif">
 </div>
+<div #errorDiv [ngStyle]="setErrorDiv()">ERRORE POI VEDIAMO QUALE</div>
 <app-header></app-header>
-<div *ngIf="isHome">
-    <h1>SONO NELLA HOME</h1>
-    <div class="gopage" routerLink="phalangiate">Go To Phalangiate</div>
-    <input #set type="text">
-    <button (click)="setGameWorld()">SET GAMEWORLD</button>
+<div *ngIf="isHome" class="homeContainer">
+    <div class="pageTitle">home page</div>
     <div class="serverContainer">
         <div class="serverPerType" *ngFor="let arr of gameWorlds">
-            <div class="server" *ngFor="let gw of arr" (click)="getData(gw.gameworldName)">
-                {{gw.gameworldName | uppercase}}
+            <div [ngClass]="{'server':true, 'error' : gw.status === false, 'selected' : gw.status === true}" 
+                *ngFor="let gw of arr" 
+                (click)="getData(gw.name)">
+                {{gw.name | uppercase}}
             </div>
         </div>
     </div>
-    <div class="contProva">
-        <div class="prova">
-            <div *ngFor="let kingdom of kingdoms" (click)="setPlayersKingdom(kingdom.kingdomId)">{{kingdom.kingdomTag}}</div>
-        </div>
-        <div class="prova">
-            <div *ngFor="let player of playersSelection" (click)="getPlayer(player.playerId)">{{player.name}}</div>
-        </div>
-        <div class="prova">
-            <div *ngFor="let villa of villageSelection" (click)="getVilla(villa)">{{villa.name}}</div>
-        </div>
-    </div>
+    <ng-template *ngIf="isGameworld then ok else no"></ng-template>
+    <ng-template #ok>
+        <div class="gopage" routerLink="phalangiate">Go To Phalangiate</div>
+    </ng-template>
+    <ng-template #no>
+        <h1 class="pageTitle">nessun mondo di gioco selezionato</h1>
+    </ng-template>
 </div>
 <router-outlet></router-outlet>

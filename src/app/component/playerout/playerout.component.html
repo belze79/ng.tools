@@ -1,0 +1,50 @@
+<div class="containerOut">
+    <div class="containerInt">
+        <div class="itemSet">
+            <div class="selectionTitle">
+                <ng-container *ngIf="language['player']">
+                    {{language['player']['kingdom']}}
+                </ng-container>
+            </div>
+            <div [ngClass]="{'kingdom':true, 'flexCenter':true, 'btnModal':true}" (click)="toggleModal('kingdom')">
+                {{kingdomName}}
+                <div [ngClass]="{'modal':true, 'openModal':isOpenModal('kingdom')}" (click)="stopPropagation($event)">
+                    <div class="itemModal flexCenter" *ngFor="let kingdom of kingdoms" (click)="setPlayersInKingdom(kingdom.kingdomId, kingdom.kingdomTag)">
+                        {{kingdom.kingdomTag}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="itemSet">
+            <div class="selectionTitle">
+                <ng-container *ngIf="language['player']">
+                    {{language['player']['player']}}
+                </ng-container>
+            </div>
+            <div [ngClass]="{'player':true, 'flexCenter':true, 'btnModal':true}" (click)="toggleModal('player')">
+                {{playerName}}
+                <div [ngClass]="{'modal':true, 'openModal':isOpenModal('player')}" (click)="stopPropagation($event)">
+                    <div class="itemModal flexCenter" *ngFor="let player of playersInKingdom" (click)="setPlayer(player.playerId)">
+                        {{player.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="itemSet">
+        <div class="selectionTitle">
+            <ng-container *ngIf="language['player']">
+                {{language['player']['village']}}
+            </ng-container>
+        </div>
+        <div [ngClass]="{'village':true, 'flexCenter':true, 'btnModal':true, 'disableClick':!playerOut.tribe}" 
+        (click)="toggleModal('village')">
+            {{villageName}}
+            <div [ngClass]="{'modal':true, 'openModal':isOpenModal('village')}" (click)="stopPropagation($event)">
+                <div class="itemModal flexCenter" *ngFor="let village of villagesOfPlayer" (click)="setVillage(village)">
+                    {{village.name + ' - ' + village.x + ' / ' + village.y}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

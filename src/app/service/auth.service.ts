@@ -37,51 +37,55 @@ export class AuthService {
   private spinnerSubject : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   username$ : Observable<string> = this.usernameSubject.asObservable()
   spinner$ : Observable<boolean> = this.spinnerSubject.asObservable()
-  private roleS! : string
-  private accessT! : string
-  private refreshT! : string
+  // private roleS! : string
+  // private accessT! : string
+  // private refreshT! : string
 
   constructor(private http : HttpClient, 
     private storageService : StorageService,
     private router : Router) { 
-      this.username = this.username
-      this.role = this.role
+      const username = this.username
+      const role = this.role
+      if(username && role){
+        this.username = username
+        this.role = role
+      }
   }
 
-  get username() : string{
-    return this.storageService.getLocal(StorageKey.USERNAME)
+  get username() : string | null{
+    return this.storageService.username
   }
 
   set username(username : string){
-    this.storageService.setLocal(StorageKey.USERNAME, username)
+    this.storageService.username = username
     this.usernameSubject.next(username)
   }
 
-  get role() : string{
-    return this.storageService.getLocal(StorageKey.ROLE)
+  get role() : string | null{
+    return this.storageService.role
   }
 
   set role(role : string){
-    this.storageService.setLocal(StorageKey.ROLE, role)
-    this.roleS = role
+    this.storageService.role = role
+    // this.roleS = role
   }
 
-  get accessToken() : string{
-    return this.storageService.getLocal(StorageKey.ACCESS_TOKEN)
+  get accessToken() : string | null{
+    return this.storageService.accessToken
   }
 
   set accessToken(token : string){
-    this.storageService.setLocal(StorageKey.ACCESS_TOKEN, token)
-    this.accessT = token
+    this.storageService.accessToken = token
+    // this.accessT = token
   }
 
-  get refreshToken() : string{
-    return this.storageService.getLocal(StorageKey.REFRESH_TOKEN)
+  get refreshToken() : string | null{
+    return this.storageService.refreshToken
   }
 
   set refreshToken(token : string){
-    this.storageService.setLocal(StorageKey.REFRESH_TOKEN, token)
-    this.refreshT = token
+    this.storageService.refreshToken = token
+    // this.refreshT = token
   }
 
   set spinner(isSpinner : boolean){
@@ -89,7 +93,7 @@ export class AuthService {
   }
 
   isValidAuth(role : string) : boolean{
-    return this.username !== '' && this.role === role
+    return this.username !== null && this.role === role
   }
 
   login(body : LoginRequest) : Observable<any>{

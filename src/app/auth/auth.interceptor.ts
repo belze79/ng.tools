@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService, TokenResponse } from '../service/auth.service';
-import { catchError, finalize, Observable, switchMap, throwError } from 'rxjs';
+import { catchError, finalize, switchMap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 let isRequestRun : boolean = false
@@ -16,8 +16,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req)
   }
 
-  const token : string = isRefersh ? authService.refreshToken : authService.accessToken
+  const token : string | null = isRefersh ? authService.refreshToken : authService.accessToken 
   console.log(isRefersh ? 'refreshToken' : 'accessToken', 'in interceptor', token)
+  if(!token){
+    return throwError(() => new Error('refreshToken o accessToken non presente nello storage'))
+  }
 
   clone = req.clone({
     setHeaders : {Authorization: `Bearer ${token}`}
@@ -61,6 +64,7 @@ const handleAuthErrors = (req : HttpRequest<unknown>, next : HttpHandlerFn, auth
         setHeaders : {Authorization: `Bearer ${tokens.response.accessToken}`},
         body : req.body ? {...req.body, token : tokens.response.accessToken} : null
       })
+      isRefersh = false
       console.log('nuova richiesta dopo il refresh', clone)
       return next(clone)
     }),

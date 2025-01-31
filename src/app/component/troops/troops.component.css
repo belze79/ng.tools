@@ -1,0 +1,49 @@
+.containerTroops{
+    width: 350px;
+    padding-inline: 30px;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5px;
+}
+
+.selected{
+    width: 100%;
+    height: 30px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 18px;
+    background-color: var(--bg-button);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 30px;
+    position: relative;
+}
+
+.modal{
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.troop{
+    width: 25px;
+    height: 25px;
+    border: 1px solid;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.troop img{
+    width: 15px;
+    height: 15px;
+}
+
+.disableClick{
+    pointer-events: none;
+}
